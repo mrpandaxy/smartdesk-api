@@ -5,9 +5,9 @@
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Google Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=google&logoColor=white)
 
-O SmartDesk não é apenas um sistema de abertura de chamados. É uma plataforma Full-Stack construída para otimizar o fluxo de trabalho de equipes de Suporte de TI (Nível 1 e 2). 
+O SmartDesk é uma plataforma Full-Stack construída para otimizar o fluxo de trabalho de equipes de Suporte de TI (Nível 1 e 2). 
 
-O sistema resolve um dos maiores gargalos do atendimento técnico: a comunicação imprecisa do usuário final. Através da integração com Inteligência Artificial Generativa (LLMs), o SmartDesk intercepta relatos confusos e gera resumos técnicos acionáveis automaticamente, acelerando o tempo de triagem e resolução.
+O sistema resolve gargalos do atendimento técnico: a comunicação imprecisa do usuário final. Através da integração com Inteligência Artificial Generativa (LLMs), o SmartDesk intercepta relatos confusos e gera resumos técnicos acionáveis automaticamente, acelerando o tempo de triagem e resolução.
 
 ## 🎯 Arquitetura & Tecnologias
 
