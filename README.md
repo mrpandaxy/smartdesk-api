@@ -39,9 +39,10 @@ Para garantir que o produto opere com tecnologia de ponta, as seguintes features
 ```bash
 git clone [https://github.com/SEU_USUARIO/smartdesk-api.git](https://github.com/SEU_USUARIO/smartdesk-api.git)
 cd smartdesk-api
+```
 
 ### 2.Configurar o ambiente
-
+```bash
 # Crie e ative o ambiente virtual
 python -m venv .venv
 # Windows: .venv\Scripts\activate | Linux/Mac: source .venv/bin/activate
@@ -52,9 +53,10 @@ pip install django djangorestframework django-cors-headers google-generativeai
 # Execute as migrações e inicie o servidor (Porta 8000)
 python manage.py migrate
 python manage.py runserver
+```
 
 ### 3.configurar o Front-end
-
+```bash
 # Em um novo terminal, acesse a pasta do front-end
 cd frontend
 
@@ -63,5 +65,5 @@ npm install
 
 # Inicie o servidor de desenvolvimento (Porta 5173)
 npm run dev
-
+```
 
