@@ -1,9 +1,13 @@
+import os
+from dotenv import load_dotenv
 from rest_framework import viewsets
 from .models import Ticket
 from .serializers import TicketSerializer
 import google.generativeai as genai
 
-genai.configure(api_key="YOUR_API_KEY")
+load_dotenv()   
+
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 
@@ -12,7 +16,7 @@ class TicketViewSet(viewsets.ModelViewSet):
     serializer_class = TicketSerializer
 
     def perform_create(self, serializer):
-        # Pega a descrição que o React enviou no POST
+        
         descricao = serializer.validated_data.get('description', '')
         
         try:
