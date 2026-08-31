@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 function App() {
-  
   const [tickets, setTickets] = useState([])
-
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [category, setCategory] = useState('OUTROS')
@@ -21,7 +19,6 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
     const newTicket = {
       title: title,
       description: description,
@@ -31,9 +28,7 @@ function App() {
 
     axios.post('http://localhost:8000/api/tickets/', newTicket)
       .then(response => {
-       
         setTickets([...tickets, response.data])
-        
         setTitle('')
         setDescription('')
         setCategory('OUTROS')
@@ -47,7 +42,6 @@ function App() {
     <div style={{ padding: '20px', fontFamily: 'sans-serif', maxWidth: '800px', margin: '0 auto' }}>
       <h1>SmartDesk - Meus Chamados</h1>
 
-      {/* A interface do Formulário */}
       <div style={{ backgroundColor: '#f4f4f9', padding: '20px', borderRadius: '8px', marginBottom: '20px', border: '1px solid #ddd' }}>
         <h2>Abrir Novo Chamado</h2>
         
@@ -56,7 +50,7 @@ function App() {
             type="text" 
             placeholder="Resumo do problema (ex: Teclado parou de funcionar)" 
             value={title}
-            onChange={(e) => setTitle(e.target.value)} // Atualiza a variável enquanto o usuário digita
+            onChange={(e) => setTitle(e.target.value)}
             required
             style={{ padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
           />
@@ -87,7 +81,6 @@ function App() {
         </form>
       </div>
       
-      {/* A Lista de Chamados */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         {tickets.map(ticket => (
           <div key={ticket.id} style={{ padding: '15px', border: '1px solid #ccc', borderRadius: '8px' }}>
@@ -98,7 +91,16 @@ function App() {
             <span style={{ backgroundColor: '#eee', padding: '5px 10px', borderRadius: '15px', fontSize: '14px' }}>
               Categoria: <strong>{ticket.category}</strong>
             </span>
+            
             <p style={{ marginTop: '15px' }}>{ticket.description}</p>
+
+            {/* O bloco da IA precisa ficar AQUI, dentro do map, onde o 'ticket' existe */}
+            {ticket.ai_summary && (
+              <div style={{ backgroundColor: '#f0f4f8', padding: '10px', borderRadius: '5px', marginTop: '10px', borderLeft: '4px solid #8E75B2' }}>
+                <strong>🤖 Diagnóstico da IA:</strong> {ticket.ai_summary}
+              </div>
+            )}
+            
           </div>
         ))}
       </div>
