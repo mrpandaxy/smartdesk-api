@@ -55,7 +55,7 @@ function App() {
   const handleResolve = (id) => {
     axios.patch(`http://localhost:8000/api/tickets/${id}/`, { status: 'RESOLVIDO' })
       .then(response => {
-        // Mapeia a lista atual e atualiza apenas o status do chamado clicado
+      
         setTickets(tickets.map(ticket => 
           ticket.id === id ? { ...ticket, status: 'RESOLVIDO' } : ticket
         ));
