@@ -25,6 +25,24 @@ function App() {
       category: category,
       status: 'ABERTO' 
     }
+  }
+
+   const handleDelete = (id) => {
+  
+    if (!window.confirm("Tem certeza que deseja excluir este chamado?")) {
+      return;
+    }
+
+    axios.delete(`http://localhost:8000/api/tickets/${id}/`)
+      .then(response => {
+        
+        setTickets(tickets.filter(ticket => ticket.id !== id));
+      })
+      .catch(error => {
+        console.error("Erro ao excluir o chamado:", error);
+        alert("Falha ao comunicar com o servidor para exclusão.");
+      });
+
 
     axios.post('http://localhost:8000/api/tickets/', newTicket)
       .then(response => {
@@ -100,7 +118,12 @@ function App() {
                 <strong>🤖 Diagnóstico da IA:</strong> {ticket.ai_summary}
               </div>
             )}
-            
+            <button 
+              onClick={() => handleDelete(ticket.id)}
+              style={{ marginTop: '15px', padding: '8px 12px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+            >
+              🗑️ Excluir Chamado
+            </button>
           </div>
         ))}
       </div>
