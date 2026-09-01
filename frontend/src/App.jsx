@@ -25,24 +25,6 @@ function App() {
       category: category,
       status: 'ABERTO' 
     }
-  }
-
-   const handleDelete = (id) => {
-  
-    if (!window.confirm("Tem certeza que deseja excluir este chamado?")) {
-      return;
-    }
-
-    axios.delete(`http://localhost:8000/api/tickets/${id}/`)
-      .then(response => {
-        
-        setTickets(tickets.filter(ticket => ticket.id !== id));
-      })
-      .catch(error => {
-        console.error("Erro ao excluir o chamado:", error);
-        alert("Falha ao comunicar com o servidor para exclusão.");
-      });
-
 
     axios.post('http://localhost:8000/api/tickets/', newTicket)
       .then(response => {
@@ -54,6 +36,34 @@ function App() {
       .catch(error => {
         console.error("Erro ao criar chamado:", error)
       })
+  }
+
+  const handleDelete = (id) => {
+    if (!window.confirm("Tem certeza que deseja excluir este chamado?")) {
+      return;
+    }
+
+    axios.delete(`http://localhost:8000/api/tickets/${id}/`)
+      .then(response => {
+        setTickets(tickets.filter(ticket => ticket.id !== id));
+      })
+      .catch(error => {
+        console.error("Erro ao excluir o chamado:", error);
+        alert("Falha ao comunicar com o servidor para exclusão.");
+      });
+  }   
+  const handleResolve = (id) => {
+    axios.patch(`http://localhost:8000/api/tickets/${id}/`, { status: 'RESOLVIDO' })
+      .then(response => {
+        // Mapeia a lista atual e atualiza apenas o status do chamado clicado
+        setTickets(tickets.map(ticket => 
+          ticket.id === id ? { ...ticket, status: 'RESOLVIDO' } : ticket
+        ));
+      })
+      .catch(error => {
+        console.error("Erro ao resolver o chamado:", error);
+        alert("Falha ao atualizar o status no servidor.");
+      });
   }
 
   return (
@@ -112,18 +122,29 @@ function App() {
             
             <p style={{ marginTop: '15px' }}>{ticket.description}</p>
 
-            {/* O bloco da IA precisa ficar AQUI, dentro do map, onde o 'ticket' existe */}
-            {ticket.ai_summary && (
+           {ticket.ai_summary && (
               <div style={{ backgroundColor: '#f0f4f8', padding: '10px', borderRadius: '5px', marginTop: '10px', borderLeft: '4px solid #8E75B2' }}>
                 <strong>🤖 Diagnóstico da IA:</strong> {ticket.ai_summary}
               </div>
             )}
-            <button 
-              onClick={() => handleDelete(ticket.id)}
-              style={{ marginTop: '15px', padding: '8px 12px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
-            >
-              🗑️ Excluir Chamado
-            </button>
+            
+            <div style={{ marginTop: '15px', display: 'flex', gap: '10px' }}>
+              {ticket.status !== 'RESOLVIDO' && (
+                <button 
+                  onClick={() => handleResolve(ticket.id)}
+                  style={{ padding: '8px 12px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+                >
+                  ✅ Resolver
+                </button>
+              )}
+
+              <button 
+                onClick={() => handleDelete(ticket.id)}
+                style={{ padding: '8px 12px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}
+              >
+                🗑️ Excluir
+              </button>
+            </div>
           </div>
         ))}
       </div>
